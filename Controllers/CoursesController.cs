@@ -32,6 +32,28 @@ namespace WebApplication1.Controllers
             return Ok(course);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string title)
+        {
+            if (string.IsNullOrEmpty(title)) return BadRequest("Введи название");
+            var courses = await _repo.SearchCourse(title);
+            return Ok(courses);
+        }
+        [HttpGet("overthenminprise")]
+        public async Task<IActionResult> MinPrice([FromQuery] decimal price)
+        {
+            var courses = await _repo.GetByMinPriceAsync(price);
+            return Ok(courses);
+        }
+
+        [HttpGet ("count")]
+        public async Task<IActionResult> Count()
+        {
+            var count = await _repo.GetCountCoursAsync();
+            return Ok(count);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateById(EntityCourse course)
         {

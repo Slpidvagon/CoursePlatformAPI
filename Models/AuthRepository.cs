@@ -24,7 +24,7 @@ namespace AuuthRepository
         {
             author.Id = Guid.NewGuid();
             _db.Authors.Add(author);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return author;
 
         }

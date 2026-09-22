@@ -21,11 +21,34 @@ namespace Models.CourseRepository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<EntityCourse>> SearchCourse(string title)
+        {
+           return await _db.Courses
+                .Where(c => c.Title.Contains(title))
+                .AsNoTracking()
+                .ToListAsync();
+
+        }
+        public async Task<IEnumerable<EntityCourse>> GetByMinPriceAsync(decimal minPrice)
+        {
+            return await _db.Courses
+                .Where( c => c.Price > minPrice)
+                .AsNoTracking()
+                .ToListAsync();
+
+        }
+
+        public async Task<int> GetCountCoursAsync()
+        {
+            return await _db.Courses
+                .CountAsync();
+        }
+
         public async Task<EntityCourse> CreateCourse(EntityCourse course)
         {
             course.Id = Guid.NewGuid();
            _db.Courses.Add(course);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return course;
 
         }

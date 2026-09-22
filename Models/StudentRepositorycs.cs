@@ -25,7 +25,7 @@ namespace SudentRepository
         {
             student.Id = Guid.NewGuid();
             _db.Students.Add(student);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return student;
 
         }
